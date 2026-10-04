@@ -88,9 +88,3 @@ npm run build    # dist/ に出力（スキーマ検証もここで走る）
 ## デプロイ
 
 `main` に push すると GitHub Actions（`.github/workflows/deploy.yml`）がビルドして GitHub Pages に公開します。「現在」までの在籍期間を更新するため、毎月1日にも自動で再ビルドします。
-
-初回のみ必要な設定:
-
-1. GitHub の Settings → Pages で Source を **GitHub Actions** にする
-2. 同じ画面の Custom domain に `hosokai.me` を設定し、証明書の発行後に Enforce HTTPS を有効にする
-3. DNS で `hosokai.me` の A レコードを `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153` に向ける
