@@ -6,6 +6,8 @@ headline: Webアプリケーション開発
 links:
   - label: X
     url: https://x.com/ken3_0596
+  - label: Wantedly
+    url: https://www.wantedly.com/id/kenta_hosokai
 skills: [PHP, AWS, Docker, MySQL, JavaScript, jQuery, Vue.js, C#.NET]
 certifications:
   - name: AWS Certified Solutions Architect - Associate

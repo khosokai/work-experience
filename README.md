@@ -8,7 +8,7 @@ Kenta Hosokai の職務経歴サイト（<https://hosokai.me>）。Astro で静�
 
 | ファイル | 内容 |
 | --- | --- |
-| `src/content/profile.md` | 氏名・肩書き・自己紹介・外部リンク・スキル・資格 |
+| `src/content/profile.md` | 氏名・肩書き・自己紹介・外部リンク（X・Wantedly はアイコン表示）・スキル・資格 |
 | `public/avatar.png` | 名前の横に表示する丸型アイコン |
 | `src/content/experience/*.md` | 所属企業ごとの経歴（1企業 = 1ファイル） |
 
