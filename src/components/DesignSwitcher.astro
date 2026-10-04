@@ -1,0 +1,45 @@
+---
+// 3案比較用。採用案が決まったら削除する
+const { current } = Astro.props;
+const designs = [
+  { key: 'a', label: 'A クラシック' },
+  { key: 'b', label: 'B エディトリアル' },
+  { key: 'c', label: 'C ターミナル' },
+];
+---
+
+<nav class="switcher" id="design-switcher" aria-label="デザイン案の切り替え">
+  {
+    designs.map((d) => (
+      <a href={`/design/${d.key}/`} aria-current={d.key === current ? 'page' : undefined}>
+        {d.label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .switcher {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 10;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #1c1f24;
+    font: 500 12px/1 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+  }
+  #design-switcher a {
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: #c9ced6;
+    text-decoration: none;
+  }
+  #design-switcher a[aria-current] {
+    background: #fff;
+    color: #1c1f24;
+  }
+</style>

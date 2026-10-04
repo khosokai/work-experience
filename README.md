@@ -1,1 +1,68 @@
 # work-experience
+
+細貝 憲太の職務経歴サイト（<https://hosokai.me>）。Astro で静的生成し、GitHub Pages で公開しています。
+
+## 経歴を追記する
+
+経歴はすべて Markdown で管理しています。
+
+| ファイル | 内容 |
+| --- | --- |
+| `src/content/profile.md` | 氏名・肩書き・自己紹介・スキル・資格 |
+| `src/content/experience/*.md` | 所属企業ごとの経歴（1企業 = 1ファイル） |
+
+### 所属企業を追加する
+
+`src/content/experience/` に `YYYY-MM-名前.md`（例: `2026-01-example.md`）を追加します。`名前` の部分がダイアログの URL（`https://hosokai.me/#example`）になります。
+
+```md
+---
+company: 株式会社Example
+role: テックリード
+type: work            # work | education
+start: 2026-01
+end: 2026-12          # 在籍中は行ごと省略すると「現在」と表示される
+summary: タイムラインに表示する概要文。
+highlights:           # 省略可。タイムラインに箇条書きで表示
+  - 取り組みA
+tags: [PHP, AWS]      # 省略可
+---
+
+## 案件名
+- **期間**: 2026/01 〜 2026/06
+- **業界**: 
+- **規模 / 役割**: 
+- **担当工程**: 
+- **技術**: `PHP` `AWS`
+
+案件の概要、担当した内容など。
+```
+
+- frontmatter（`---` の間）がタイムラインの概要、本文が「詳しく見る」で開くダイアログの内容になります
+- 本文が空（コメントのみ）の場合、「詳しく見る」は表示されません
+- 並び順は自動です（在籍中が先頭、以降は `start` が新しい順）。在籍期間も自動計算します
+- 案件を足すときは、本文に `## 案件名` のブロックを追加します（新しいものを上に）
+- 必須項目の欠落や日付形式（`YYYY-MM`）の誤りはビルドエラーになり、公開されません
+
+### 公開範囲のルール
+
+- 顧客やサービスが特定できる名称・URL は書かない（「大手自動車メーカー」「医薬品紹介サイト」のように一般化する）
+- 年齢・住所などの個人情報は書かない
+
+## ローカルで確認する
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # dist/ に出力（スキーマ検証もここで走る）
+```
+
+## デプロイ
+
+`main` に push すると GitHub Actions（`.github/workflows/deploy.yml`）がビルドして GitHub Pages に公開します。「現在」までの在籍期間を更新するため、毎月1日にも自動で再ビルドします。
+
+初回のみ必要な設定:
+
+1. GitHub の Settings → Pages で Source を **GitHub Actions** にする
+2. 同じ画面の Custom domain に `hosokai.me` を設定し、証明書の発行後に Enforce HTTPS を有効にする
+3. DNS で `hosokai.me` の A レコードを `185.199.108.153` / `185.199.109.153` / `185.199.110.153` / `185.199.111.153` に向ける

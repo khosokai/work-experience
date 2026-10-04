@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  fonts: string;
+  design: string;
+}
+const { title, description, fonts, design } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fonts} />
+  </head>
+  <body data-design={design}>
+    <slot />
+    <script>
+      const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.detail');
+      const openFromHash = () => {
+        const target = document.getElementById(`detail-${location.hash.slice(1)}`);
+        if (target instanceof HTMLDialogElement && !target.open) target.showModal();
+      };
+
+      document.querySelectorAll<HTMLElement>('[data-open]').forEach((button) => {
+        button.addEventListener('click', () => {
+          history.replaceState(null, '', `#${button.dataset.open}`);
+          openFromHash();
+        });
+      });
+
+      dialogs.forEach((dialog) => {
+        dialog.addEventListener('click', (event) => {
+          // 背景（::backdrop）のクリックは dialog 自身がターゲットになる
+          if (event.target === dialog) dialog.close();
+        });
+        dialog.querySelector('.detail-close')?.addEventListener('click', () => dialog.close());
+        dialog.addEventListener('close', () => {
+          history.replaceState(null, '', location.pathname + location.search);
+        });
+      });
+
+      window.addEventListener('hashchange', openFromHash);
+      openFromHash();
+    </script>
+  </body>
+</html>

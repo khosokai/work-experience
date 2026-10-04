@@ -1,0 +1,352 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailDialog from '../../components/DetailDialog.astro';
+import DesignSwitcher from '../../components/DesignSwitcher.astro';
+import { getExperiences, getProfile, formatYm } from '../../lib/experience';
+import '../../styles/dialog.css';
+
+const profile = await getProfile();
+const items = await getExperiences();
+const fonts =
+  'https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap';
+---
+
+<Base title={`${profile.name} | 職務経歴`} description={profile.headline} fonts={fonts} design="b">
+  <header class="hero">
+    <p class="hero-name">{profile.name}</p>
+    <h1>{profile.headline}</h1>
+    <div class="hero-side">
+      <p>{profile.title}<br />{profile.location}</p>
+      <profile.Content />
+      <ul class="hero-links">
+        {profile.links.map((l) => <li><a href={l.url} rel="me noopener">{l.label}</a></li>)}
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <ol class="timeline">
+      {
+        items.map((item) => (
+          <li class="entry">
+            <div class="entry-year" aria-hidden="true">
+              <span>{item.startYear}</span>
+            </div>
+            <div class="entry-body">
+              <p class="entry-period">
+                {item.startLabel} 〜 {item.endLabel}
+                <span>{item.duration}</span>
+              </p>
+              <h2>{item.company}</h2>
+              <p class="entry-role">{item.role}</p>
+              {item.summary && <p class="entry-summary">{item.summary}</p>}
+              {item.highlights.length > 0 && (
+                <ul class="entry-highlights">
+                  {item.highlights.map((h) => <li>{h}</li>)}
+                </ul>
+              )}
+              {item.hasDetail && (
+                <button type="button" class="more" data-open={item.slug}>
+                  詳しく見る
+                </button>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="extras">
+      <section>
+        <h2>スキル</h2>
+        <p class="skills">{profile.skills.join('、')}</p>
+      </section>
+      <section>
+        <h2>資格</h2>
+        <ul class="certs">
+          {
+            profile.certifications.map((c) => (
+              <li>
+                <span>{formatYm(c.date)}</span>
+                {c.name}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  {items.filter((i) => i.hasDetail).map((item) => <DetailDialog item={item} />)}
+  <DesignSwitcher current="b" />
+</Base>
+
+<style is:global>
+  body[data-design='b'] {
+    --bg: #eef1f5;
+    --text: #0f1a36;
+    --muted: #56607a;
+    --line: #0f1a36;
+    --accent: #2438c9;
+    --dialog-bg: #f8f9fb;
+    --dialog-radius: 0;
+    --dialog-border: 1px solid #0f1a36;
+    --dialog-title-font: 700 1rem 'Shippori Mincho B1', serif;
+    --control-radius: 0;
+    --chip-radius: 0;
+    --chip-bg: #dfe4ee;
+    --backdrop: rgb(15 26 54 / 0.6);
+    --serif: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body[data-design='b'] {
+      --bg: #0d1326;
+      --text: #e9ecf5;
+      --muted: #9aa3bd;
+      --line: #e9ecf5;
+      --accent: #9aa8ff;
+      --dialog-bg: #141b33;
+      --dialog-border: 1px solid #e9ecf5;
+      --chip-bg: #232c4d;
+      --backdrop: rgb(4 7 16 / 0.7);
+    }
+  }
+
+  [data-design='b'] .hero,
+  [data-design='b'] main {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  [data-design='b'] .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17rem;
+    column-gap: 48px;
+    align-items: end;
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+
+  [data-design='b'] .hero-name {
+    grid-column: 1 / -1;
+    margin: 0 0 88px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+  }
+
+  [data-design='b'] .hero h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 800;
+    font-size: clamp(2.25rem, 6.4vw, 4.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  [data-design='b'] .hero-side {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  [data-design='b'] .hero-side p {
+    margin: 0 0 10px;
+  }
+
+  [data-design='b'] .hero-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-design='b'] a {
+    color: var(--accent);
+    text-underline-offset: 4px;
+  }
+
+  [data-design='b'] .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-design='b'] .entry {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: 48px;
+    align-items: start;
+    padding: 28px 0 72px;
+    border-top: 1px solid var(--line);
+  }
+
+  [data-design='b'] .entry-year {
+    position: sticky;
+    top: 16px;
+  }
+
+  [data-design='b'] .entry-year span {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(4rem, 13vw, 9.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-variant-numeric: lining-nums;
+  }
+
+  [data-design='b'] .entry:first-child .entry-year span {
+    color: var(--accent);
+  }
+
+  [data-design='b'] .entry-period {
+    margin: 6px 0 14px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-design='b'] .entry-period span {
+    margin-left: 1em;
+  }
+
+  [data-design='b'] .entry h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    line-height: 1.4;
+  }
+
+  [data-design='b'] .entry-role {
+    margin: 4px 0 18px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  [data-design='b'] .entry-summary {
+    margin: 0 0 12px;
+    max-width: 34em;
+  }
+
+  [data-design='b'] .entry-highlights {
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  [data-design='b'] .entry-highlights li {
+    padding: 5px 0;
+    border-bottom: 1px dotted color-mix(in srgb, var(--line) 35%, transparent);
+  }
+
+  [data-design='b'] .more {
+    margin-top: 14px;
+    padding: 0 0 2px;
+    border: none;
+    border-bottom: 2px solid var(--accent);
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  [data-design='b'] .more:hover {
+    border-bottom-width: 4px;
+    padding-bottom: 0;
+  }
+
+  [data-design='b'] :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  [data-design='b'] .extras {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: 48px;
+    padding: 28px 0 140px;
+    border-top: 1px solid var(--line);
+  }
+
+  [data-design='b'] .extras h2 {
+    margin: 0 0 16px;
+    font-family: var(--serif);
+    font-size: 1.25rem;
+  }
+
+  [data-design='b'] .skills {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  [data-design='b'] .certs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+  }
+
+  [data-design='b'] .certs li {
+    display: grid;
+    grid-template-columns: 7em 1fr;
+    padding: 5px 0;
+  }
+
+  [data-design='b'] .certs span {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 720px) {
+    [data-design='b'] .hero,
+    [data-design='b'] main {
+      padding: 0 20px;
+    }
+    [data-design='b'] .hero {
+      grid-template-columns: 1fr;
+      padding-top: 24px;
+      padding-bottom: 40px;
+    }
+    [data-design='b'] .hero-name {
+      margin-bottom: 48px;
+    }
+    [data-design='b'] .hero-side {
+      margin-top: 24px;
+    }
+    [data-design='b'] .entry,
+    [data-design='b'] .extras {
+      grid-template-columns: 1fr;
+    }
+    [data-design='b'] .entry {
+      padding-bottom: 48px;
+    }
+    [data-design='b'] .entry-year {
+      position: static;
+    }
+    [data-design='b'] .entry-year span {
+      font-size: 4.5rem;
+    }
+    [data-design='b'] .extras section + section {
+      margin-top: 40px;
+    }
+  }
+</style>

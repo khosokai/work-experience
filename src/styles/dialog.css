@@ -1,0 +1,145 @@
+/* 3案共通のダイアログ骨格。色や書体は各案の CSS 変数で決まる */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+dialog.detail {
+  width: min(760px, calc(100vw - 24px));
+  max-height: min(86dvh, 900px);
+  padding: 0;
+  border: var(--dialog-border, none);
+  border-radius: var(--dialog-radius, 12px);
+  background: var(--dialog-bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+dialog.detail[open] {
+  display: flex;
+  flex-direction: column;
+  animation: detail-in 0.18s ease-out;
+}
+
+dialog.detail::backdrop {
+  background: var(--backdrop, rgb(10 16 24 / 0.55));
+}
+
+@keyframes detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.detail[open] {
+    animation: none;
+  }
+}
+
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-head h2 {
+  margin: 4px 0 2px;
+  font: var(--dialog-title-font, inherit);
+  font-size: 1.375rem;
+  line-height: 1.4;
+}
+
+.detail-period,
+.detail-role {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.detail-close {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--control-radius, 6px);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.detail-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.detail-body {
+  padding: 4px 28px 32px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.detail-body h2 {
+  margin: 28px 0 10px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font: var(--dialog-title-font, inherit);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.detail-body h2:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.detail-body ul {
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.detail-body ul strong {
+  display: inline-block;
+  min-width: 6.5em;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.detail-body p {
+  margin: 0 0 10px;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+
+.detail-body code {
+  display: inline-block;
+  margin: 2px 2px 2px 0;
+  padding: 0 8px;
+  border-radius: var(--chip-radius, 4px);
+  background: var(--chip-bg);
+  color: var(--chip-text, var(--text));
+  font: inherit;
+  font-size: 0.75rem;
+  line-height: 1.9;
+}
+
+@media (max-width: 560px) {
+  .detail-head {
+    padding: 18px 18px 14px;
+  }
+  .detail-body {
+    padding: 0 18px 24px;
+  }
+  .detail-body ul strong {
+    min-width: 0;
+    margin-right: 0.5em;
+  }
+}
