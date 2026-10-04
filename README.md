@@ -1,6 +1,6 @@
 # work-experience
 
-細貝 憲太の職務経歴サイト（<https://hosokai.me>）。Astro で静的生成し、GitHub Pages で公開しています。
+Kenta Hosokai の職務経歴サイト（<https://hosokai.me>）。Astro で静的生成し、GitHub Pages で公開しています。
 
 ## 経歴を追記する
 
@@ -9,6 +9,7 @@
 | ファイル | 内容 |
 | --- | --- |
 | `src/content/profile.md` | 氏名・肩書き・自己紹介・スキル・資格 |
+| `public/avatar.png` | 名前の横に表示する丸型アイコン |
 | `src/content/experience/*.md` | 所属企業ごとの経歴（1企業 = 1ファイル） |
 
 ### 所属企業を追加する

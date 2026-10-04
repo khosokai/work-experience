@@ -1,12 +1,8 @@
 ---
-name: 細貝 憲太
-nameEn: Kenta Hosokai
+name: Kenta Hosokai
 title: フリーランス Webエンジニア / 個人事業主
 location: 福岡県
 headline: Webアプリケーション開発やってます。
-links:
-  - label: GitHub
-    url: https://github.com/khosokai
 skills: [PHP, AWS, Docker, MySQL, JavaScript, jQuery, Vue.js, C#.NET]
 certifications:
   - name: AWS Certified Solutions Architect - Associate

@@ -40,11 +40,9 @@ const profile = defineCollection({
   loader: glob({ pattern: 'profile.md', base: './src/content' }),
   schema: z.object({
     name: z.string(),
-    nameEn: z.string(),
     title: z.string(),
     location: z.string(),
     headline: z.string(),
-    links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
     skills: z.array(z.string()).default([]),
     certifications: z.array(z.object({ name: z.string(), date: yearMonth })).default([]),
   }),

@@ -15,13 +15,15 @@ const ym = (v?: string) => v ?? '現在';
   <div class="term">
     <header class="hero">
       <p class="prompt"><span>$</span> whoami</p>
-      <h1>{profile.name}<span class="hero-en">{profile.nameEn}</span></h1>
-      <p class="hero-meta">{profile.title} @ {profile.location}</p>
+      <div class="hero-id">
+        <img src="/avatar.png" alt="" width="72" height="72" />
+        <div>
+          <h1>{profile.name}</h1>
+          <p class="hero-meta">{profile.title} @ {profile.location}</p>
+        </div>
+      </div>
       <p class="hero-headline">{profile.headline}</p>
       <div class="hero-intro"><profile.Content /></div>
-      <ul class="hero-links">
-        {profile.links.map((l) => <li><a href={l.url} rel="me noopener">{l.label}</a></li>)}
-      </ul>
     </header>
 
     <main>
@@ -209,15 +211,25 @@ const ym = (v?: string) => v ?? '現在';
     line-height: 1.4;
   }
 
-  [data-design='c'] .hero-en {
-    margin-left: 0.8em;
-    font-size: 0.9375rem;
-    font-weight: 400;
-    color: var(--muted);
+  [data-design='c'] .hero-id {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  [data-design='c'] .hero-id img {
+    flex: none;
+    width: 72px;
+    height: 72px;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    object-fit: cover;
   }
 
   [data-design='c'] .hero-meta {
-    margin: 4px 0 20px;
+    margin: 2px 0 0;
     color: var(--branch);
   }
 
@@ -229,14 +241,6 @@ const ym = (v?: string) => v ?? '現在';
   [data-design='c'] .hero-intro p {
     margin: 0;
     color: var(--muted);
-  }
-
-  [data-design='c'] .hero-links {
-    display: flex;
-    gap: 16px;
-    margin: 16px 0 0;
-    padding: 0;
-    list-style: none;
   }
 
   [data-design='c'] a {
@@ -477,9 +481,12 @@ const ym = (v?: string) => v ?? '現在';
     [data-design='c'] .term {
       padding: 32px 16px 120px;
     }
-    [data-design='c'] .hero-en {
-      display: block;
-      margin-left: 0;
+    [data-design='c'] .hero-id {
+      gap: 14px;
+    }
+    [data-design='c'] .hero-id img {
+      width: 60px;
+      height: 60px;
     }
   }
 </style>
