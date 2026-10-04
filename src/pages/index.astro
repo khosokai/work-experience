@@ -9,6 +9,12 @@ const { items, rows } = await getTimeline();
 const fonts =
   'https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@400;500;700&display=swap';
 const ym = (v?: string) => v ?? '現在';
+// profile.md の links で label が一致するものはアイコンで表示する（simple-icons のパス）
+const icons: Record<string, string> = {
+  X: 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z',
+  Wantedly:
+    'M18.453 14.555c-.171-.111-.658-.764-2.006-3.982a9.192 9.192 0 0 0-.237-.526l-.274-.664-2.362-5.702H8.85l2.362 5.702 2.362 5.706 2.181 5.267a.196.196 0 0 0 .362 0l2.373-5.682a.1.1 0 0 0-.037-.119zm-8.85 0c-.171-.111-.658-.764-2.006-3.982a8.971 8.971 0 0 0-.236-.525l-.276-.665-2.36-5.702H0l2.362 5.702 2.362 5.706 2.181 5.267a.196.196 0 0 0 .362 0l2.374-5.682a.098.098 0 0 0-.038-.119ZM24 6.375a2.851 2.851 0 0 1-2.851 2.852 2.851 2.851 0 0 1-2.852-2.852 2.851 2.851 0 0 1 2.852-2.851A2.851 2.851 0 0 1 24 6.375Z',
+};
 ---
 
 <Base title={`${profile.name} | 職務経歴`} description={profile.headline} fonts={fonts} design="c">
@@ -19,7 +25,26 @@ const ym = (v?: string) => v ?? '現在';
         <img src="/avatar.png" alt="" width="72" height="72" />
         <div>
           <h1>{profile.name}</h1>
-          <p class="hero-meta">{profile.title} @ {profile.location}</p>
+          <div class="hero-sub">
+            <p class="hero-meta">{profile.title} @ {profile.location}</p>
+            <ul class="hero-links">
+              {
+                profile.links.map((l) => (
+                  <li>
+                    {icons[l.label] ? (
+                      <a class="hero-icon" href={l.url} target="_blank" rel="me noopener noreferrer" aria-label={l.label}>
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                          <path d={icons[l.label]} />
+                        </svg>
+                      </a>
+                    ) : (
+                      <a href={l.url} target="_blank" rel="me noopener noreferrer">{l.label}</a>
+                    )}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </div>
       <p class="hero-headline">{profile.headline}</p>
@@ -72,9 +97,9 @@ const ym = (v?: string) => v ?? '現在';
                       {role.highlights.map((h) => <li>{h}</li>)}
                     </ul>
                   )}
-                  {row.first && item.tags.length > 0 && (
+                  {role.tags.length > 0 && (
                     <ul class="commit-tags">
-                      {item.tags.map((t) => <li>{t}</li>)}
+                      {role.tags.map((t) => <li>{t}</li>)}
                     </ul>
                   )}
                   {row.first && item.hasDetail && (
@@ -226,6 +251,46 @@ const ym = (v?: string) => v ?? '現在';
     border-radius: 50%;
     background: #fff;
     object-fit: cover;
+  }
+
+  [data-design='c'] .hero-id > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  [data-design='c'] .hero-sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  [data-design='c'] .hero-links {
+    display: flex;
+    flex: none;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-design='c'] .hero-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--text);
+  }
+
+  [data-design='c'] .hero-icon:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  [data-design='c'] .hero-icon svg {
+    fill: currentColor;
   }
 
   [data-design='c'] .hero-meta {
