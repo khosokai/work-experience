@@ -8,7 +8,7 @@ Kenta Hosokai の職務経歴サイト（<https://hosokai.me>）。Astro で静�
 
 | ファイル | 内容 |
 | --- | --- |
-| `src/content/profile.md` | 氏名・肩書き・自己紹介・スキル・資格 |
+| `src/content/profile.md` | 氏名・肩書き・自己紹介・外部リンク・スキル・資格 |
 | `public/avatar.png` | 名前の横に表示する丸型アイコン |
 | `src/content/experience/*.md` | 所属企業ごとの経歴（1企業 = 1ファイル） |
 
@@ -64,11 +64,14 @@ roles:                          # 役割の変遷。それぞれが1コミット
     summary: 概要文。
     highlights:
       - 取り組みA
+    tags: [AWS, Terraform]      # 役割ごとの技術タグ（省略可）
   - role: エンジニア
     start: 2026-01
     end: 2026-06
 ---
 ```
+
+`roles` のどれにも `tags` が無い場合は、経歴全体の `tags` を先頭の役割に表示します。
 
 同じ分岐元を持つブランチ同士は、期間が重ならない前提で描画しています。
 

@@ -3,6 +3,9 @@ name: Kenta Hosokai
 title: フリーランス Webエンジニア / 個人事業主
 location: 福岡県
 headline: Webアプリケーション開発
+links:
+  - label: X
+    url: https://x.com/ken3_0596
 skills: [PHP, AWS, Docker, MySQL, JavaScript, jQuery, Vue.js, C#.NET]
 certifications:
   - name: AWS Certified Solutions Architect - Associate

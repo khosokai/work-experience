@@ -72,9 +72,17 @@ export async function getTimeline() {
     const branches = items.filter((i) => i.parent === item.slug);
     for (const branch of branches) {
       const roles = branch.roles.length > 0 ? branch.roles : [{ ...branch, highlights: branch.highlights }];
+      // 役割ごとの tags がひとつも無ければ、経歴全体の tags を先頭の役割に表示する
+      const hasRoleTags = roles.some((role) => role.tags.length > 0);
       if (!branch.current) rows.push({ kind: 'merge', item: branch });
       roles.forEach((role, index) =>
-        rows.push({ kind: 'role', item: branch, role, first: index === 0, tip: index === 0 && branch.current }),
+        rows.push({
+          kind: 'role',
+          item: branch,
+          role: { ...role, tags: hasRoleTags || index > 0 ? role.tags : branch.tags },
+          first: index === 0,
+          tip: index === 0 && branch.current,
+        }),
       );
       rows.push({ kind: 'fork', item: branch });
     }

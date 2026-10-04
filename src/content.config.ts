@@ -30,6 +30,8 @@ const experience = defineCollection({
           end: yearMonth.optional(),
           summary: z.string().optional(),
           highlights: z.array(z.string()).default([]),
+          // 省略すると、先頭の役割に経歴全体の tags を表示する
+          tags: z.array(z.string()).default([]),
         }),
       )
       .default([]),
@@ -43,6 +45,8 @@ const profile = defineCollection({
     title: z.string(),
     location: z.string(),
     headline: z.string(),
+    // label が X のものはアイコンで表示する
+    links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
     skills: z.array(z.string()).default([]),
     certifications: z.array(z.object({ name: z.string(), date: yearMonth })).default([]),
   }),
