@@ -1,0 +1,23 @@
+---
+import type { Experience } from '../lib/experience';
+
+interface Props {
+  item: Experience;
+}
+const { item } = Astro.props;
+const { Content } = item;
+---
+
+<dialog class="detail" id={`detail-${item.slug}`} aria-labelledby={`detail-title-${item.slug}`}>
+  <header class="detail-head">
+    <div>
+      <p class="detail-period">{item.startLabel} 〜 {item.endLabel}（{item.duration}）</p>
+      <h2 id={`detail-title-${item.slug}`}>{item.company}</h2>
+      <p class="detail-role">{item.role}</p>
+    </div>
+    <button type="button" class="detail-close" aria-label="閉じる">閉じる</button>
+  </header>
+  <div class="detail-body">
+    <Content />
+  </div>
+</dialog>
