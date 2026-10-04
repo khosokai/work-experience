@@ -17,6 +17,22 @@ const experience = defineCollection({
     summary: z.string().optional(),
     highlights: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
+    // 別の経歴から分岐するブランチとして表示する場合に、分岐元のファイル名（日付を除いた部分）を指定する
+    parent: z.string().optional(),
+    // ブランチに付けるラベル（例: 業務委託）
+    contract: z.string().optional(),
+    // 同じ所属の中での役割の変遷。指定するとそれぞれが1コミットとして表示される
+    roles: z
+      .array(
+        z.object({
+          role: z.string(),
+          start: yearMonth,
+          end: yearMonth.optional(),
+          summary: z.string().optional(),
+          highlights: z.array(z.string()).default([]),
+        }),
+      )
+      .default([]),
   }),
 });
 
