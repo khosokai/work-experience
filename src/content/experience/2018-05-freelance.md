@@ -4,7 +4,7 @@ role: 個人事業主
 type: work
 start: 2018-05
 summary: Webサービス開発／サイト構築に係る設計・開発・運用、またはシステム構築支援等を行っています。
-tags: [PHP, Laravel, Vue.js, WordPress, AWS, Terraform]
+tags: [Claude Code, JavaScript, TypeScript, React, Next.js, MySQL, PostgreSQL, AWS, CloudFlare, Vercel, docker, Slack, Web Engineer, Project Manager]
 ---
 
 <!--
@@ -19,6 +19,16 @@ tags: [PHP, Laravel, Vue.js, WordPress, AWS, Terraform]
 
 案件の概要、担当した内容、得られた知見など。
 -->
+
+## 多言語化Webツール提供サイト
+- **期間**: 2026/04 〜 運営中
+- **業界**: インターネット
+- **規模 / 役割**: 個人開発サイト
+- **技術**: `Claude Code` `TypeScript` `React` `Next.js` `Tailwind CSS` `CloudFlare`
+
+基本クライアント処理のみで完結する小さなユーティリティツールを1リポジトリに集約したサイトを作成しました。
+
+Claude Codeを用いたフルAIエージェント開発、CloudFlare Workersを利用したローコスト運営を行なっています。
 
 ## オンライン決済サービス改修
 - **期間**: 2019/09 〜 2019/12

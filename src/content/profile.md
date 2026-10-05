@@ -8,7 +8,8 @@ links:
     url: https://x.com/ken3_0596
   - label: Wantedly
     url: https://www.wantedly.com/id/kenta_hosokai
-skills: [PHP, AWS, Docker, MySQL, JavaScript, jQuery, Vue.js, C#.NET]
+skills: [Claude Code, Devin, JavaScript, TypeScript, React, Next.js, Vue.js, PHP, Laravel, node.js, C, C#.net
+, MySQL, PostgreSQL, Oracle, AWS, CloudFlare, Vercel, Redis, ElasticCloud, WordPress, docker, Github, Github Actions, BackLog, Asana, Slack, Chatwork, Web Engineer]
 certifications:
   - name: AWS Certified Solutions Architect - Associate
     date: 2019-11
@@ -31,3 +32,5 @@ SIer系出身で自社サービスを展開する企業やITベンチャーで�
 システム要件定義・設計、Webアプリ開発、インフラ構築など多角的に対応可能です。
 
 基本的にはカスタマー向けのWebサービス・プロダクトに関わるのが好きです。
+
+お仕事の依頼・相談はXのDMにてお願いいたします。
