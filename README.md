@@ -1,6 +1,6 @@
 # work-experience
 
-Kenta Hosokai の職務経歴サイト（<https://hosokai.me>）。Astro で静的生成し、GitHub Pages で公開しています。
+職務経歴サイト。Astro で静的生成し、GitHub Pages で公開しています。
 
 ## 経歴を追記する
 
@@ -14,7 +14,7 @@ Kenta Hosokai の職務経歴サイト（<https://hosokai.me>）。Astro で静�
 
 ### 所属企業を追加する
 
-`src/content/experience/` に `YYYY-MM-名前.md`（例: `2026-01-example.md`）を追加します。`名前` の部分がダイアログの URL（`https://hosokai.me/#example`）になります。
+`src/content/experience/` に `YYYY-MM-名前.md`（例: `2026-01-example.md`）を追加します。`名前` の部分がダイアログの URLになります。
 
 ```md
 ---
@@ -47,7 +47,7 @@ tags: [PHP, AWS]      # 省略可
 
 ### 業務委託先などをブランチとして表示する
 
-フリーランスとして参画した先のように、別の経歴と並行する所属は、分岐元から枝分かれするブランチとして表示できます（例: `2020-01-rakko.md`）。
+フリーランスとして参画した先のように、別の経歴と並行する所属は、分岐元から枝分かれするブランチとして表示できます。
 
 ```md
 ---
@@ -90,4 +90,4 @@ npm run build    # dist/ に出力（スキーマ検証もここで走る）
 
 ## デプロイ
 
-`main` に push すると GitHub Actions（`.github/workflows/deploy.yml`）がビルドして GitHub Pages に公開します。「現在」までの在籍期間を更新するため、毎月1日にも自動で再ビルドします。
+`main` に push すると GitHub Actions がビルドして GitHub Pages に公開します。「現在」までの在籍期間を更新するため、毎月1日にも自動で再ビルドします。
